@@ -4,15 +4,50 @@
         <field name="model">dossier.juridique</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <field name="statut" widget="statusbar"/>
+                </header>
                 <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Nom du dossier..."/>
+                        </h1>
+                    </div>
                     <group>
-                        <field name="name"/>
-                        <field name="avocat_id"/>
-                        <field name="client_id"/>
-                        <field name="statut"/>
-                        <field name="description"/>
-                        <field name="date_creation"/>
+                        <group>
+                            <field name="titre"/>
+                            <field name="avocat_id"/>
+                            <field name="client_id"/>
+                            <field name="type_affaire"/>
+                            <field name="priorite" widget="priority"/>
+                            <field name="etape"/>
+                        </group>
+                        <group>
+                            <field name="date_creation"/>
+                            <field name="date_echeance"/>
+                            <field name="date_cloture" invisible="date_cloture == False"/>
+                            <field name="duree_jours" widget="integer"/>
+                            <field name="juridiction"/>
+                            <field name="tribunal"/>
+                            <field name="numero_affaire"/>
+                        </group>
                     </group>
+                    <group>
+                        <field name="honoraires" widget="monetary"/>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description" placeholder="Détails du dossier..."/>
+                        </page>
+                        <page string="Notes internes">
+                            <field name="notes" placeholder="Notes pour usage interne uniquement..."/>
+                        </page>
+                    </notebook>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                     <footer>
                         <button name="valider_dossier" type="object" string="Valider" class="oe_highlight"/>
                         <button name="rejeter_dossier" type="object" string="Rejeter" class="btn-danger"/>
@@ -26,13 +61,42 @@
         <field name="name">dossier.juridique.tree</field>
         <field name="model">dossier.juridique</field>
         <field name="arch" type="xml">
-            <tree>
+            <tree decoration-danger="priorite == '4'" decoration-warning="priorite == '3'" decoration-info="priorite == '2'" decoration-muted="statut == 'rejete'">
                 <field name="name"/>
+                <field name="titre"/>
+                <field name="type_affaire"/>
                 <field name="avocat_id"/>
                 <field name="client_id"/>
                 <field name="statut"/>
+                <field name="etape"/>
+                <field name="priorite" widget="priority"/>
                 <field name="date_creation"/>
+                <field name="date_echeance"/>
             </tree>
+        </field>
+    </record>
+
+    <record id="view_dossier_search" model="ir.ui.view">
+        <field name="name">dossier.juridique.search</field>
+        <field name="model">dossier.juridique</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="titre"/>
+                <field name="avocat_id"/>
+                <field name="client_id"/>
+                <field name="type_affaire"/>
+                <filter string="Mes dossiers" name="my_dossiers" domain="[('avocat_id', '=', uid)]"/>
+                <filter string="En cours" name="en_cours" domain="[('statut', '=', 'en_cours')]"/>
+                <filter string="Terminés" name="termine" domain="[('statut', '=', 'termine')]"/>
+                <filter string="Rejetés" name="rejete" domain="[('statut', '=', 'rejete')]"/>
+                <group expand="1" string="Regrouper par">
+                    <filter string="Avocat" name="avocat" context="{'group_by': 'avocat_id'}"/>
+                    <filter string="Client" name="client" context="{'group_by': 'client_id'}"/>
+                    <filter string="Statut" name="statut" context="{'group_by': 'statut'}"/>
+                    <filter string="Type d'affaire" name="type_affaire" context="{'group_by': 'type_affaire'}"/>
+                </group>
+            </search>
         </field>
     </record>
 
@@ -42,7 +106,7 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="menu_cabinets_root" name="Cabinet d'Avocats" sequence="10"/> 
+    <menuitem id="menu_cabinets_root" name="Cabinet d'Avocats" sequence="10"/>
     <menuitem id="menu_dossiers_root" parent="menu_cabinets_root" name="Dossiers Juridiques" sequence="20"/>
     <menuitem id="menu_dossiers_list" parent="menu_dossiers_root" name="Liste des Dossiers" action="action_dossiers"/>
 </odoo>

@@ -1,7 +1,7 @@
 {
     "name": "Cabinet d'Avocats",
     "version": "1.0",
-    "depends": ["base"],
+    "depends": ["base", "mail"],
     "author": "Ahmed Hmety",
     "category": "Gestion Légale",
     "summary": "Gestion des dossiers juridiques, des clients et des avocats",
