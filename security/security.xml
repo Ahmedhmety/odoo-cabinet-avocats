@@ -1,0 +1,11 @@
+<odoo>
+    <record id="group_avocat" model="res.groups">
+        <field name="name">Avocats</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+    
+    <record id="group_client" model="res.groups">
+        <field name="name">Clients</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+    </record>
+</odoo>

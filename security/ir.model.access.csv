@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_avocat,access_avocat,model_avocat,base.group_user,1,1,1,1
+access_client,access_client,model_client,base.group_user,1,1,1,1
+access_dossier_juridique,access_dossier_juridique,model_dossier_juridique,base.group_user,1,1,1,1
+access_cabinet_user,access_cabinet_user,model_cabinet_user,base.group_user,1,1,1,1

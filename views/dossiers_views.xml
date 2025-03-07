@@ -1,0 +1,48 @@
+<odoo>
+    <record id="view_dossier_form" model="ir.ui.view">
+        <field name="name">dossier.juridique.form</field>
+        <field name="model">dossier.juridique</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="avocat_id"/>
+                        <field name="client_id"/>
+                        <field name="statut"/>
+                        <field name="description"/>
+                        <field name="date_creation"/>
+                    </group>
+                    <footer>
+                        <button name="valider_dossier" type="object" string="Valider" class="oe_highlight"/>
+                        <button name="rejeter_dossier" type="object" string="Rejeter" class="btn-danger"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_dossier_tree" model="ir.ui.view">
+        <field name="name">dossier.juridique.tree</field>
+        <field name="model">dossier.juridique</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="avocat_id"/>
+                <field name="client_id"/>
+                <field name="statut"/>
+                <field name="date_creation"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_dossiers" model="ir.actions.act_window">
+        <field name="name">Dossiers Juridiques</field>
+        <field name="res_model">dossier.juridique</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_cabinets_root" name="Cabinet d'Avocats" sequence="10"/> 
+    <menuitem id="menu_dossiers_root" parent="menu_cabinets_root" name="Dossiers Juridiques" sequence="20"/>
+    <menuitem id="menu_dossiers_list" parent="menu_dossiers_root" name="Liste des Dossiers" action="action_dossiers"/>
+</odoo>

@@ -1,0 +1,47 @@
+<odoo>
+    <record id="view_users_form" model="ir.ui.view">
+        <field name="name">users.form</field>
+        <field name="model">cabinet.user</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="email"/>
+                        <field name="phone"/>
+                        <field name="x_role"/>
+                        <field name="state"/>
+                        <field name="user_id" invisible="1"/>  
+                    </group>
+                    <footer>
+                        <button name="action_validate" type="object" string="Valider" class="oe_highlight"/>
+                        <button name="action_reject" type="object" string="Rejeter" class="btn-danger"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_users_tree" model="ir.ui.view">
+        <field name="name">users.tree</field>
+        <field name="model">cabinet.user</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="x_role"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_users" model="ir.actions.act_window">
+        <field name="name">Utilisateurs</field>
+        <field name="res_model">cabinet.user</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_cabinet_users" parent="menu_cabinets_root"
+          name="Gestion des Utilisateurs" action="action_users" sequence="10"/>
+</odoo>
